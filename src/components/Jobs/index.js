@@ -1,9 +1,12 @@
 import Header from '../Header'
+import UserProfile from '../UserProfile'
+import AllJobs from '../AllJobs'
 
 const Jobs = () => (
   <>
     <Header />
-    <h1>Jobs Page</h1>
+    <UserProfile />
+    <AllJobs />
   </>
 )
 
