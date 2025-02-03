@@ -11,10 +11,12 @@ const Header = props => {
 
   return (
     <div>
-      <img
-        src="https://assets.ccbp.in/frontend/react-js/logo-img.png "
-        alt="website logo"
-      />
+      <Link to="/">
+        <img
+          src="https://assets.ccbp.in/frontend/react-js/logo-img.png "
+          alt="website logo"
+        />
+      </Link>
       <Link to="/">Home</Link>
       <Link to="/jobs">Jobs</Link>
       <button type="button" onClick={onClickLogout}>

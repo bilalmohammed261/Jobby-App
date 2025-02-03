@@ -2,7 +2,7 @@ import {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
-import {FaSearch} from 'react-icons/fa'
+import FiltersGroup from '../FiltersGroup'
 import JobCard from '../JobCard'
 import './index.css'
 
@@ -17,9 +17,20 @@ class AllJobs extends Component {
   state = {
     jobsList: [],
     apiStatus: apiStatusConstants.initial,
+    searchInput: '',
   }
 
   componentDidMount() {
+    this.getJobs()
+  }
+
+  changeSearchInput = searchInput => {
+    this.setState({
+      searchInput,
+    })
+  }
+
+  enterSearchInput = () => {
     this.getJobs()
   }
 
@@ -28,7 +39,8 @@ class AllJobs extends Component {
       apiStatus: apiStatusConstants.inProgress,
     })
     const jwtToken = Cookies.get('jwt_token')
-    const jobsUrl = `https://apis.ccbp.in/jobs`
+    const {searchInput} = this.state
+    const jobsUrl = `https://apis.ccbp.in/jobs?search=${searchInput}`
     const options = {
       method: 'GET',
       headers: {Authorization: `Bearer ${jwtToken}`},
@@ -61,15 +73,23 @@ class AllJobs extends Component {
 
   renderJobsListSuccessView = () => {
     const {jobsList} = this.state
-    return (
+    const shouldShowJobsList = jobsList.length > 0
+    return shouldShowJobsList ? (
       <>
-        <input type="search" placeholder="Search" />
-        <FaSearch />
         <ul>
           {jobsList.map(job => (
             <JobCard key={job.id} jobDetails={job} />
           ))}
         </ul>
+      </>
+    ) : (
+      <>
+        <img
+          src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
+          alt="no jobs"
+        />
+        <h1>No Jobs Found</h1>
+        <p>We could not find any jobs.Try other filters.</p>
       </>
     )
   }
@@ -109,7 +129,17 @@ class AllJobs extends Component {
   }
 
   render() {
-    return <>{this.renderJobsList()}</>
+    const {searchInput} = this.state
+    return (
+      <>
+        <FiltersGroup
+          searchInput={searchInput}
+          changeSearchInput={this.changeSearchInput}
+          enterSearchInput={this.enterSearchInput}
+        />
+        {this.renderJobsList()}
+      </>
+    )
   }
 }
 

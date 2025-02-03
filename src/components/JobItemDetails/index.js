@@ -2,8 +2,13 @@ import {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
-import {FaRegStar, FaMapMarkerAlt, FaBriefcase} from 'react-icons/fa'
-import {LiaExternalLinkAltSolid} from 'react-icons/lia'
+import {
+  FaRegStar,
+  FaMapMarkerAlt,
+  FaBriefcase,
+  FaExternalLinkAlt,
+} from 'react-icons/fa'
+
 import Header from '../Header'
 import SimilarJobItem from '../SimilarJobItem'
 
@@ -125,8 +130,8 @@ class JobItemDetails extends Component {
         <FaBriefcase />
         <p>{employmentType}</p>
         <p>{packagePerAnnum}</p>
-        <Link to={companyWebsiteUrl}>Visit</Link>
-        <LiaExternalLinkAltSolid />
+        <a href={companyWebsiteUrl}>Visit</a>
+        <FaExternalLinkAlt />
         <hr />
         <p>Description</p>
         <p>{jobDescription}</p>
