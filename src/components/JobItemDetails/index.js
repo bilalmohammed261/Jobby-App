@@ -93,9 +93,7 @@ class JobItemDetails extends Component {
         similarJobs: updatedSimilarJobsData,
         apiStatus: apiStatusConstants.success,
       })
-    }
-
-    if (response.status === 404) {
+    } else {
       this.setState({
         apiStatus: apiStatusConstants.failure,
       })
@@ -133,7 +131,7 @@ class JobItemDetails extends Component {
         <a href={companyWebsiteUrl}>Visit</a>
         <FaExternalLinkAlt />
         <hr />
-        <p>Description</p>
+        <h1>Description</h1>
         <p>{jobDescription}</p>
         <h1>Skills</h1>
         <ul>
@@ -166,21 +164,25 @@ class JobItemDetails extends Component {
     </div>
   )
 
-  renderFailureView = () => (
-    <div>
-      <img
-        alt="failure view"
-        src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
-      />
-      <h1>Oops! Something Went Wrong </h1>
-      <p>We cannot seem to find the page you are looking for.</p>
-      <Link to="/jobs">
-        <button type="button" className="button">
-          Retry
-        </button>
-      </Link>
-    </div>
-  )
+  renderFailureView = () => {
+    const {jobData} = this.state
+    const {id} = jobData
+    return (
+      <div>
+        <img
+          alt="failure view"
+          src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
+        />
+        <h1>Oops! Something Went Wrong</h1>
+        <p>We cannot seem to find the page you are looking for</p>
+        <Link to={`jobs/${id}`}>
+          <button type="button" className="button">
+            Retry
+          </button>
+        </Link>
+      </div>
+    )
+  }
 
   renderJobDetails = () => {
     const {apiStatus} = this.state

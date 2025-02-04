@@ -16,7 +16,7 @@ const SimilarJobItem = props => {
       <h1>{title}</h1>
       <FaRegStar />
       <p>{rating}</p>
-      <p>Description</p>
+      <h1>Description</h1>
       <FaMapMarkerAlt />
       <p>{location}</p>
       <FaBriefcase />
@@ -25,7 +25,6 @@ const SimilarJobItem = props => {
       <hr />
 
       <p>{jobDescription}</p>
-      <h1>Skills</h1>
     </li>
   )
 }

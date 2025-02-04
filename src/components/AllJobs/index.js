@@ -13,11 +13,51 @@ const apiStatusConstants = {
   failure: 'FAILURE',
 }
 
+const employmentTypesList = [
+  {
+    label: 'Full Time',
+    employmentTypeId: 'FULLTIME',
+  },
+  {
+    label: 'Part Time',
+    employmentTypeId: 'PARTTIME',
+  },
+  {
+    label: 'Freelance',
+    employmentTypeId: 'FREELANCE',
+  },
+  {
+    label: 'Internship',
+    employmentTypeId: 'INTERNSHIP',
+  },
+]
+
+const salaryRangesList = [
+  {
+    salaryRangeId: '1000000',
+    label: '10 LPA and above',
+  },
+  {
+    salaryRangeId: '2000000',
+    label: '20 LPA and above',
+  },
+  {
+    salaryRangeId: '3000000',
+    label: '30 LPA and above',
+  },
+  {
+    salaryRangeId: '4000000',
+    label: '40 LPA and above',
+  },
+]
+
 class AllJobs extends Component {
   state = {
     jobsList: [],
     apiStatus: apiStatusConstants.initial,
     searchInput: '',
+    employmentTypes: [],
+    salaryRangeId: '',
   }
 
   componentDidMount() {
@@ -30,6 +70,28 @@ class AllJobs extends Component {
     })
   }
 
+  filterEmploymentTypes = (value, checked) => {
+    this.setState(prevState => {
+      if (checked) {
+        return {employmentTypes: [...prevState.employmentTypes, value]}
+      }
+      return {
+        employmentTypes: prevState.employmentTypes.filter(
+          type => type !== value,
+        ),
+      }
+    }, this.getJobs)
+  }
+
+  updateSalaryRange = salaryRangeId => {
+    this.setState(
+      {
+        salaryRangeId,
+      },
+      this.getJobs,
+    )
+  }
+
   enterSearchInput = () => {
     this.getJobs()
   }
@@ -39,8 +101,9 @@ class AllJobs extends Component {
       apiStatus: apiStatusConstants.inProgress,
     })
     const jwtToken = Cookies.get('jwt_token')
-    const {searchInput} = this.state
-    const jobsUrl = `https://apis.ccbp.in/jobs?search=${searchInput}`
+    const {searchInput, employmentTypes, salaryRangeId} = this.state
+    const employmentTypesString = employmentTypes.join(',')
+    const jobsUrl = `https://apis.ccbp.in/jobs?search=${searchInput}&employment_type=${employmentTypesString}&minimum_package=${salaryRangeId}`
     const options = {
       method: 'GET',
       headers: {Authorization: `Bearer ${jwtToken}`},
@@ -63,8 +126,7 @@ class AllJobs extends Component {
         apiStatus: apiStatusConstants.success,
         jobsList: jobsData,
       })
-    }
-    if (response.status === 401) {
+    } else {
       this.setState({
         apiStatus: apiStatusConstants.failure,
       })
@@ -89,7 +151,7 @@ class AllJobs extends Component {
           alt="no jobs"
         />
         <h1>No Jobs Found</h1>
-        <p>We could not find any jobs.Try other filters.</p>
+        <p>We could not find any jobs.Try other filters</p>
       </>
     )
   }
@@ -101,7 +163,7 @@ class AllJobs extends Component {
         alt="failure view"
       />
       <h1>Oops! Something Went Wrong</h1>
-      <p>We cannot seem to find the page you are looking for.</p>
+      <p>We cannot seem to find the page you are looking for</p>
       <Link to="/jobs">
         <button type="button">Retry</button>
       </Link>
@@ -136,6 +198,10 @@ class AllJobs extends Component {
           searchInput={searchInput}
           changeSearchInput={this.changeSearchInput}
           enterSearchInput={this.enterSearchInput}
+          employmentTypesList={employmentTypesList}
+          filterEmploymentTypes={this.filterEmploymentTypes}
+          salaryRangesList={salaryRangesList}
+          updateSalaryRange={this.updateSalaryRange}
         />
         {this.renderJobsList()}
       </>

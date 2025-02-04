@@ -10,19 +10,28 @@ const Header = props => {
   }
 
   return (
-    <div>
+    <>
       <Link to="/">
         <img
           src="https://assets.ccbp.in/frontend/react-js/logo-img.png "
           alt="website logo"
         />
       </Link>
-      <Link to="/">Home</Link>
-      <Link to="/jobs">Jobs</Link>
-      <button type="button" onClick={onClickLogout}>
-        Logout
-      </button>
-    </div>
+      <ul>
+        <li>
+          {' '}
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/jobs">Jobs</Link>
+        </li>
+        <li>
+          <button type="button" onClick={onClickLogout}>
+            Logout
+          </button>
+        </li>
+      </ul>
+    </>
   )
 }
 

@@ -26,7 +26,7 @@ const JobCard = props => {
         <p>{employmentType}</p>
         <p>{packagePerAnnum}</p>
         <hr />
-        <p>Description</p>
+        <h1>Description</h1>
         <p>{jobDescription}</p>
       </Link>
     </li>
