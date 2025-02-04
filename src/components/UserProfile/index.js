@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 import './index.css'
@@ -18,6 +18,10 @@ class UserProfile extends Component {
   }
 
   componentDidMount() {
+    this.getUserData()
+  }
+
+  onClickRetry = () => {
     this.getUserData()
   }
 
@@ -73,9 +77,9 @@ class UserProfile extends Component {
   )
 
   renderUserProfileFailureView = () => (
-    <Link to="/jobs">
-      <button type="button">Retry</button>
-    </Link>
+    <button type="button" onClick={this.onClickRetry}>
+      Retry
+    </button>
   )
 
   renderUserProfile = () => {

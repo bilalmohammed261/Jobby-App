@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 import FiltersGroup from '../FiltersGroup'
@@ -96,6 +96,10 @@ class AllJobs extends Component {
     this.getJobs()
   }
 
+  onClickRetry = () => {
+    this.getJobs()
+  }
+
   getJobs = async () => {
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
@@ -104,7 +108,7 @@ class AllJobs extends Component {
     const {searchInput, employmentTypes, salaryRangeId} = this.state
     const employmentTypesString = employmentTypes.join(',')
 
-    const jobsUrl = `https://apis.ccbp.in/jobs?employment_type==${employmentTypesString}&minimum_package=${salaryRangeId}&search=${searchInput}`
+    const jobsUrl = `https://apis.ccbp.in/jobs?employment_type=${employmentTypesString}&minimum_package=${salaryRangeId}&search=${searchInput}`
     const options = {
       method: 'GET',
       headers: {Authorization: `Bearer ${jwtToken}`},
@@ -152,7 +156,7 @@ class AllJobs extends Component {
           alt="no jobs"
         />
         <h1>No Jobs Found</h1>
-        <p>We could not find any jobs.Try other filters</p>
+        <p>We could not find any jobs. Try other filters</p>
       </>
     )
   }
@@ -165,9 +169,10 @@ class AllJobs extends Component {
       />
       <h1>Oops! Something Went Wrong</h1>
       <p>We cannot seem to find the page you are looking for</p>
-      <Link to="/jobs">
-        <button type="button">Retry</button>
-      </Link>
+
+      <button type="button" onClick={this.onClickRetry}>
+        Retry
+      </button>
     </div>
   )
 

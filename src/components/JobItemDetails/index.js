@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 import {
@@ -62,6 +62,10 @@ class JobItemDetails extends Component {
     rating: data.rating,
     title: data.title,
   })
+
+  onClickRetry = () => {
+    this.getJobData()
+  }
 
   getJobData = async () => {
     const {match} = this.props
@@ -164,27 +168,20 @@ class JobItemDetails extends Component {
     </div>
   )
 
-  renderFailureView = () => {
-    const {match} = this.props
-    const {params} = match
-    const {id} = params
+  renderFailureView = () => (
+    <div>
+      <img
+        alt="failure view"
+        src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
+      />
+      <h1>Oops! Something Went Wrong</h1>
+      <p>We cannot seem to find the page you are looking for</p>
 
-    return (
-      <div>
-        <img
-          alt="failure view"
-          src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
-        />
-        <h1>Oops! Something Went Wrong</h1>
-        <p>We cannot seem to find the page you are looking for</p>
-        <Link to={`/jobs/${id}`}>
-          <button type="button" className="button">
-            Retry
-          </button>
-        </Link>
-      </div>
-    )
-  }
+      <button type="button" className="button" onClick={this.onClickRetry}>
+        Retry
+      </button>
+    </div>
+  )
 
   renderJobDetails = () => {
     const {apiStatus} = this.state
