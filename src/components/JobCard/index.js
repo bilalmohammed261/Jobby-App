@@ -15,7 +15,7 @@ const JobCard = props => {
   } = jobDetails
   return (
     <li>
-      <Link to={`jobs/${id}`}>
+      <Link to={`/jobs/${id}`}>
         <img src={companyLogoUrl} alt="company logo" />
         <h1>{title}</h1>
         <FaRegStar />

@@ -165,8 +165,10 @@ class JobItemDetails extends Component {
   )
 
   renderFailureView = () => {
-    const {jobData} = this.state
-    const {id} = jobData
+    const {match} = this.props
+    const {params} = match
+    const {id} = params
+
     return (
       <div>
         <img
@@ -175,7 +177,7 @@ class JobItemDetails extends Component {
         />
         <h1>Oops! Something Went Wrong</h1>
         <p>We cannot seem to find the page you are looking for</p>
-        <Link to={`jobs/${id}`}>
+        <Link to={`/jobs/${id}`}>
           <button type="button" className="button">
             Retry
           </button>

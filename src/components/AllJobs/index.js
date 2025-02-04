@@ -103,7 +103,8 @@ class AllJobs extends Component {
     const jwtToken = Cookies.get('jwt_token')
     const {searchInput, employmentTypes, salaryRangeId} = this.state
     const employmentTypesString = employmentTypes.join(',')
-    const jobsUrl = `https://apis.ccbp.in/jobs?search=${searchInput}&employment_type=${employmentTypesString}&minimum_package=${salaryRangeId}`
+
+    const jobsUrl = `https://apis.ccbp.in/jobs?employment_type==${employmentTypesString}&minimum_package=${salaryRangeId}&search=${searchInput}`
     const options = {
       method: 'GET',
       headers: {Authorization: `Bearer ${jwtToken}`},
@@ -159,7 +160,7 @@ class AllJobs extends Component {
   renderJobsListFailureView = () => (
     <div>
       <img
-        src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
+        src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
         alt="failure view"
       />
       <h1>Oops! Something Went Wrong</h1>
